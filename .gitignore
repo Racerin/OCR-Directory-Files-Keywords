@@ -1,0 +1,8 @@
+# Virtual Environment
+venv
+
+# Cache stuff
+*__pycache__
+
+# Personal
+experiments.py
