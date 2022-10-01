@@ -70,10 +70,23 @@ def strip_file_format(filename:str) -> str:
         return None
 
 
-def read_pdf_file(file_path:str, page_separator:str="\n") -> str:
-    """ Convert PDF file's content to text. """
+def read_pdf_file(file_path:str, page_separator:str="\n", metadata=True, password="") -> str:
+    """ 
+    Convert PDF file's content to text.
+    Decrypt file with password if encrypted.
+    Access meta data (author,creator,etc).
+    """
     # Access pdf file
     reader = PdfReader(file_path)
+    # Decrypt with password if encrypted
+    if reader.is_encrypted:
+        reader.decrypt(password)
+    elif password:
+        logging.info("The file '{}' was not encrypted.".format(file_path))
+    str1 = ""
+    # Extract meta data
+    if metadata:
+        str1 += str(reader.metadata)
     # Extract text in pages of file
     pages_gen = (pg.extract_text() for pg in reader.pages)
     str1 = page_separator.join(pages_gen)
