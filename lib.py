@@ -5,6 +5,7 @@ import random
 import os
 from contextlib import contextmanager
 
+from PyPDF2 import PdfReader
 
 import PARAMS
 
@@ -69,8 +70,14 @@ def strip_file_format(filename:str) -> str:
         return None
 
 
-def read_pdf_file(file_path:str):
+def read_pdf_file(file_path:str, page_separator:str="\n") -> str:
     """ Convert PDF file's content to text. """
+    # Access pdf file
+    reader = PdfReader(file_path)
+    # Extract text in pages of file
+    pages_gen = (pg.extract_text() for pg in reader.pages)
+    str1 = page_separator.join(pages_gen)
+    return str1
     
 
 def read_file(file_path:str) -> str:
@@ -79,4 +86,4 @@ def read_file(file_path:str) -> str:
      """
     file_format_ext = strip_file_format(file_path)
     if file_format_ext == 'pdf':
-        print()
+        return read_pdf_file(file_path)
