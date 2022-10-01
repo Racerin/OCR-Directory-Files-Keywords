@@ -48,3 +48,13 @@ class TestLibrary(unittest.TestCase):
             ans = lib.hash_file(f.name)
             print(ans)
             assert isinstance(ans, str), "This file suppose to return a str variable. {}".format(type(ans))
+
+    def test_read_pdf_file(self):
+        """ 
+        Read pdf file.
+        Test done using test.pdf file.
+        """
+        # Open perfectly normal file
+        ans = lib.read_pdf_file(lib.PARAMS.TEST_PDF_FILE)
+        assert isinstance(ans, str)
+        # print(ans)

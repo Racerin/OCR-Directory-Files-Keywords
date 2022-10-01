@@ -40,3 +40,6 @@ DEF_BUFFER_SIZE = 65536     # 64kB chunks
 
 
 RANDOM_STRING_OPTIONS = string.ascii_letters
+
+
+TEST_PDF_FILE = "tests/test.pdf"
