@@ -70,7 +70,7 @@ def strip_file_format(filename:str) -> str:
         return None
 
 
-def read_pdf_file(file_path:str, page_separator:str="\n", metadata=True, password="") -> str:
+def read_pdf_file(file_path:str, page_separator:str="\n", image:bool=True, metadata:bool=True, password:str="") -> str:
     """ 
     Convert PDF file's content to text.
     Decrypt file with password if encrypted.
@@ -87,6 +87,9 @@ def read_pdf_file(file_path:str, page_separator:str="\n", metadata=True, passwor
     # Extract meta data
     if metadata:
         str1 += str(reader.metadata)
+    # Extract image data
+    if image:
+        pass
     # Extract text in pages of file
     pages_gen = (pg.extract_text() for pg in reader.pages)
     str1 = page_separator.join(pages_gen)
@@ -100,3 +103,6 @@ def read_file(file_path:str) -> str:
     file_format_ext = strip_file_format(file_path)
     if file_format_ext == 'pdf':
         return read_pdf_file(file_path)
+    else:
+        logging.info("File format not supported.")
+        return None
